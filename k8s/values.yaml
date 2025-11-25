@@ -1,7 +1,10 @@
-image: database-crm:local
+# This file is intended to be consumed by the umbrella chart script.
+# It's not the full "apps" map — the deploy script wraps it under apps.<name>
+image: database_crm:local
 replicas: 1
 port: 5432
 
+# Database doesn't need authentication
 requiresAuth: false
 
 env:
@@ -17,10 +20,5 @@ resources:
     cpu: "200m"
     memory: "256Mi"
 
+# ClusterIP - only accessible within cluster
 serviceType: ClusterIP
-
-# Persistent storage for database
-persistence:
-  enabled: true
-  size: 2Gi
-  storageClass: standard
