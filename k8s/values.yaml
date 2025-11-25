@@ -1,4 +1,4 @@
-image: customer-db:local
+image: database-crm:local
 replicas: 1
 port: 5432
 
@@ -24,27 +24,3 @@ persistence:
   enabled: true
   size: 2Gi
   storageClass: standard
-
-# Health checks
-healthCheck:
-  enabled: true
-  readinessProbe:
-    exec:
-      command:
-        - pg_isready
-        - -U
-        - postgres
-        - -d
-        - demo_db
-    initialDelaySeconds: 10
-    periodSeconds: 5
-  livenessProbe:
-    exec:
-      command:
-        - pg_isready
-        - -U
-        - postgres
-        - -d
-        - demo_db
-    initialDelaySeconds: 30
-    periodSeconds: 10
