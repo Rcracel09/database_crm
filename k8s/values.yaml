@@ -1,0 +1,50 @@
+image: customer-db:local
+replicas: 1
+port: 5432
+
+requiresAuth: false
+
+env:
+  POSTGRES_DB: "demo_db"
+  POSTGRES_USER: "postgres"
+  POSTGRES_PASSWORD: "postgres123"
+
+resources:
+  limits:
+    cpu: "500m"
+    memory: "512Mi"
+  requests:
+    cpu: "200m"
+    memory: "256Mi"
+
+serviceType: ClusterIP
+
+# Persistent storage for database
+persistence:
+  enabled: true
+  size: 2Gi
+  storageClass: standard
+
+# Health checks
+healthCheck:
+  enabled: true
+  readinessProbe:
+    exec:
+      command:
+        - pg_isready
+        - -U
+        - postgres
+        - -d
+        - demo_db
+    initialDelaySeconds: 10
+    periodSeconds: 5
+  livenessProbe:
+    exec:
+      command:
+        - pg_isready
+        - -U
+        - postgres
+        - -d
+        - demo_db
+    initialDelaySeconds: 30
+    periodSeconds: 10
