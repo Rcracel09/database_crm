@@ -4,10 +4,15 @@ image: database_crm:local
 replicas: 1
 port: 5432
 
+anonymize: true
+
 # Database doesn't need authentication
 requiresAuth: false
 
+
 env:
+  POSTGRES_HOST: "localhost"
+  POSTGRES_PORT: 5432
   POSTGRES_DB: "demo_db"
   POSTGRES_USER: "postgres"
   POSTGRES_PASSWORD: "postgres123"

@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS customers (
 -- Create interactions table
 CREATE TABLE IF NOT EXISTS interactions (
     id SERIAL PRIMARY KEY,
-    customer_id INTEGER REFERENCES customers(id) ON DELETE CASCADE,
+    custom_id INTEGER REFERENCES customers(id) ON DELETE CASCADE,
     interaction_type VARCHAR(50) NOT NULL,
     subject VARCHAR(255),
     description TEXT NOT NULL,
@@ -87,7 +87,7 @@ INSERT INTO customers (name, email, phone, address, company, notes) VALUES
  'Lead qualificado. Reunião agendada com Pedro Sousa (pedro@ltplabs.pt) para demo.');
 
 -- Insert interactions with PII in descriptions
-INSERT INTO interactions (customer_id, interaction_type, subject, description, created_by) VALUES
+INSERT INTO interactions (custom_id, interaction_type, subject, description, created_by) VALUES
 (1, 'email', 'Proposta Comercial', 
  'Enviado email com proposta para joao.silva@techcorp.pt. Aguardando resposta. Cópia para Maria Costa (maria.costa@ltplabs.pt).', 
  'João Silva (Account Manager)'),
@@ -162,7 +162,7 @@ INSERT INTO interactions (customer_id, interaction_type, subject, description, c
 
 -- Create indexes for performance
 CREATE INDEX idx_customers_email ON customers(email);
-CREATE INDEX idx_interactions_customer ON interactions(customer_id);
+CREATE INDEX idx_interactions_customer ON interactions(custom_id);
 CREATE INDEX idx_interactions_type ON interactions(interaction_type);
 
 -- Verify data
